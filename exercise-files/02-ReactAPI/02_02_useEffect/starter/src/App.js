@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 /*
@@ -74,7 +74,14 @@ function Form({ generate, guess, onChange, values }) {
   );
 }
 
-function Result() {
+function Result({result, input}) {
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const answer = result == parseInt(input); 
+    setMessage(answer? "You guessed right!" : "You got the wrong answer :(");
+  }, [])
+
   return (
     <div
       className="d-flex flex-column justify-content-between"
@@ -88,16 +95,24 @@ function Result() {
   );
 }
 
+const checkTheNumber = () => {
+  checkResult(values.random1, values.random2);
+}
+
 function App() {
   const [values, setValues] = useState({ random1: 0, random2: 0 });
   const [input, setInput] = useState(0);
+  const [result, checkResult] = useState(0);
 
   const generateRandomValues = () => {
     const random1 = Math.floor(Math.random() * 50);
     const random2 = Math.floor(Math.random() * 50);
     setValues({ random1, random2 });
   };
-  const guessTheNumber = () => {};
+
+  const guessTheNumber = () => {
+    checkResult(values.random1, values.random2);
+  };
 
   return (
     <div className="p-5" style={{ width: "80%" }}>

@@ -106,6 +106,7 @@ function App() {
     setValues({ random1, random2 });
     checkResult("");
   };
+  
   const guessTheNumber = () => {
     checkResult(values.random1 + values.random2);
   };
